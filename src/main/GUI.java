@@ -2,12 +2,7 @@ package main;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GUI extends JPanel {
@@ -20,37 +15,28 @@ public class GUI extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-
+		if (Main.isDebugging) {
+			g2d.drawString("X: " + String.valueOf(Main.cursorX), 100, 60);
+			g2d.drawString("Y: " + String.valueOf(Main.cursorY), 100, 80);
+			g2d.drawString("W: " + String.valueOf(Main.windowW), 100, 100);
+			g2d.drawString("H: " + String.valueOf(Main.windowH), 100, 120);
+			g2d.drawString("Count: " + String.valueOf(Main.closeButtonCount), 100, 140);
+			g2d.drawString("Timer: " + String.valueOf(Main.closeButtonTimer), 100, 160);
+			g2d.drawString("Increment: " + String.valueOf(Main.closeButtonIncrement), 100, 180);
+			g2d.drawString("Over Close: " + Main.overCloseButton, 100, 200);
+			g2d.drawString("Radius Squared: " + Main.closeButtonRadiusSquared, 100, 220);
+			g2d.drawString("Is Fullscreen: " + Main.isFullscreen, 100, 240);
+			g2d.drawString("Previous Fullscreen: " + Main.previousFullscreenState, 100, 260);
+			g2d.drawString("Running from jar: " + Main.isJar, 100, 280);
+		}
 		switch (Main.currentProgram) {
 		case 0:
-			if (Main.isDebugging) {
-				g2d.drawString("X: " + String.valueOf(Main.cursorX), 100, 60);
-				g2d.drawString("Y: " + String.valueOf(Main.cursorY), 100, 80);
-				g2d.drawString("W: " + String.valueOf(Main.windowW), 100, 100);
-				g2d.drawString("H: " + String.valueOf(Main.windowH), 100, 120);
-				g2d.drawString("Count: " + String.valueOf(Main.closeButtonCount), 100, 140);
-				g2d.drawString("Timer: " + String.valueOf(Main.closeButtonTimer), 100, 160);
-				g2d.drawString("Increment: " + String.valueOf(Main.closeButtonIncrement), 100, 180);
-				g2d.drawString("Over Close: " + Main.overCloseButton, 100, 200);
-				g2d.drawString("Radius Squared: " + Main.closeButtonRadiusSquared, 100, 220);
-				g2d.drawString("Is Fullscreen: " + Main.isFullscreen, 100, 240);
-				g2d.drawString("Previous Fullscreen: " + Main.previousFullscreenState, 100, 260);
-				g2d.drawString("Previous WindowW: " + Main.previousWindowW, 100, 280);
-				g2d.drawString("Previous WindowH: " + Main.previousWindowH, 100, 300);
-				for (int a = 0; a < Main.iconRows; a++) {
-					for (int b = 0; b < Main.iconRows; b++) {
-						try {
-							//      InputStream is = new BufferedInputStream(
-					        // new FileInputStream("source.gif"));
-					        // image = ImageIO.read(is);
-							img = ImageIO.read(new BufferedInputStream(new FileInputStream("res/Icon" + (a * Main.iconRows + b) + ".png")));
-							g2d.drawImage(img, Main.iconX[a][b] - Main.iconSize / 2,
-									Main.iconY[a][b] - Main.iconSize / 2, null);
-						} catch (IOException e) {
-						}
-						g2d.drawOval(Main.iconX[a][b] - Main.iconSize / 2, Main.iconY[a][b] - Main.iconSize / 2,
-								Main.iconSize, Main.iconSize);
-					}
+			for (int a = 0; a < Main.iconRows; a++) {
+				for (int b = 0; b < Main.iconRows; b++) {
+					g2d.drawImage(Main.icon[a][b], Main.iconX[a][b] - Main.iconSize / 2,
+							Main.iconY[a][b] - Main.iconSize / 2, null);
+					g2d.drawOval(Main.iconX[a][b] - Main.iconSize / 2, Main.iconY[a][b] - Main.iconSize / 2,
+							Main.iconSize, Main.iconSize);
 				}
 			}
 			break;
